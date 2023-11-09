@@ -1,0 +1,45 @@
+html 
+    head
+        meta(http-equiv="Content-Type" content="application/x-www-form-urlencoded")
+        title XSS
+        style
+            include ../../public/xss.css
+    body
+        a(href="/")
+            button Natrag
+        br
+    script.
+        let xssPos = document.URL.indexOf("XSS=");
+        document.cookie = "Uzeo sam tvoj kolačić!";
+        function validateForm(input) {
+            console.log(input)
+            let regex = /^[a-zA-Z0-9\s\_\;\,]+$/
+            if (!regex.test(input)) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+        let competitionPos = document.URL.indexOf("competition=") + 12;
+        let competitorsPos = document.URL.indexOf("competitors=") + 12;
+        let competition = document.URL.substring(competitionPos, competitorsPos - 13)
+        let competitors = document.URL.substring(competitorsPos)
+        if (xssPos < 0) {
+            let valid1 = validateForm(decodeURIComponent(competition.replace(/\+/g, " ")))
+            let valid2 = validateForm(decodeURIComponent(competitors.replace(/\+/g, " ")))
+            if (valid1 && valid2) {
+                document.write("Ime natjecanja: ")
+                document.write(decodeURIComponent(competition.replace(/\+/g, " ")))
+                document.write("<br>")
+                document.write("Natjecatelji: ")
+                document.write(decodeURIComponent(competitors.replace(/\+/g, " ")))
+            } else {
+                document.write("Ranjivost je isključena, dobar pokušaj")
+            }
+        } else {
+            document.write(decodeURIComponent("Ime natjecanja: "))
+            document.write(decodeURIComponent(competition))
+            document.write("<br>")
+            document.write(decodeURIComponent("Natjecatelji: "))
+            document.write(decodeURIComponent(competitors))
+        }

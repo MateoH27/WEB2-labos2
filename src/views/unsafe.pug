@@ -1,0 +1,12 @@
+html 
+    head
+        title Nesigurna pohrana osjetljivih podataka
+        style
+            include ../../public/unsafe.css
+    body
+        a(href="/")
+            button Natrag
+        br
+        div Podaci koji su spremljeni u bazu
+        div Ime: #{name}
+        div Lozinka: #{password}

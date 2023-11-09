@@ -1,0 +1,42 @@
+html 
+    head
+        title Ranjivosti
+        meta(http-equiv="Content-Type" content="application/x-www-form-urlencoded")
+        style
+            include ../../public/vulnerabilities.css
+    body
+        h3 Ispod su prikazana dva tipa ranjivosti aplikacije: XSS i nesigurna pohrana osjetljivih podataka
+        span Napravljena je forma za unos podataka imena i lozinke i dodan je checkbox pomoću kojeg možete isprobati traženu ranjivost aplikacije.
+        h2 1)
+        div #[b XSS] je oblik napada u kojemu se podaci od nadača šalju u preglednik korisnika.
+        -var n = ["<script>alert('XSS test');</script>", "<script>alert(document.cookie);</script>", "<script>document.location.href='http://www.hr';</script>"]
+        span Neki XSS napadi koje možete isprobati: 
+            ul
+                each i in n
+                    li= i
+            form(action="/xss" method="get")
+                div.type XSS ranjivost uključena
+                    input.value(type="checkbox" name="XSS" id="1" value="true")
+                div.form
+                    div Ime natjecanja:
+                    input(type="text" name="competition" id="11" value="")
+                    div Imena natjecatelja:
+                    input(type="text" name="competitors" id="12" value="")
+                    if error1
+                        div.error Vrijednosti u formi ne smiju biti prazne!
+                    div
+                        input(type='submit' value='Unesi podatke')
+            h2 2)
+            div #[b Nesigurna pohrana osjetljivih podataka] je ranjivost u kojoj osjetljivi podaci nisu zaštičeni na ispravan način.
+                form(action="/unsafe" method="post")
+                    div.type Nesigurna pohrana osjetljivih podataka uključena
+                        input(type="checkbox" name="sensitive" id="2" value="true")
+                    div.form
+                        div Ime:
+                        input(type="text" name="name" id="21" value="")
+                        div Lozinka:
+                        input(type="password" name="password" id="22" value="")
+                        if error2
+                            div.error Vrijednosti u formi ne smiju biti prazne!
+                        div
+                            input(type='submit' value='Prikaži podatke')
