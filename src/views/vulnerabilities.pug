@@ -6,7 +6,7 @@ html
             include ../../public/vulnerabilities.css
     body
         h3 Ispod su prikazana dva tipa ranjivosti aplikacije: XSS i nesigurna pohrana osjetljivih podataka
-        span Napravljena je forma za unos podataka imena i lozinke i dodan je checkbox pomoću kojeg možete isprobati traženu ranjivost aplikacije.
+        span Napravljena je forma za unos nekih podataka samo kako bi testirala funkcionalnost aplikacije i dodan je checkbox pomoću kojeg možete isprobati traženu ranjivost aplikacije.
         h2 1)
         div #[b XSS] je oblik napada u kojemu se podaci od napadača šalju u preglednik korisnika.
         -var n = ["<script>alert('XSS test');</script>", "<script>alert(document.cookie);</script>", "<script>document.location.href='http://www.hr';</script>"]
